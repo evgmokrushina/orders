@@ -22,11 +22,11 @@ public class Error {
     }
 
     public static void main(String[] args) {
-        Error errorDefault = new Error();
-        Error error = new Error(true, 1, "Конструктор работает");
-        Error error1 = new Error(false, 2, "Конструктор работает");
-        errorDefault.printInfo();
-        error.printInfo();
-        error1.printInfo();
+        Error defaultVariable = new Error();
+        Error active = new Error(true, 1, "Конструктор работает");
+        Error inactive = new Error(false, 2, "Конструктор работает");
+        defaultVariable.printInfo();
+        active.printInfo();
+        inactive.printInfo();
     }
 }
