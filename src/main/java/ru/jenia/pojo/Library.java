@@ -1,6 +1,13 @@
 package ru.jenia.pojo;
 
 public class Library {
+    private void printInfo(Book[] books) {
+        for (Book book : books) {
+            System.out.println("Книга: " + book.getName()
+                    + "; Количество страниц: " + book.getPages());
+        }
+    }
+
     public static void main(String[] args) {
         Book cleanCode = new Book("Clean Code", 100);
         Book theOmen = new Book("The Omen", 500);
@@ -11,24 +18,20 @@ public class Library {
         books[1] = theOmen;
         books[2] = psychology;
         books[3] = flock;
-        for (int i = 0; i < books.length; i++) {
-            Book bk = books[i];
-            System.out.println("Книга: " + bk.getName()
-                    + "; Количество страниц: " + bk.getPages());
-        }
+        Library bk = new Library();
+        bk.printInfo(books);
+        System.out.println();
         Book temp = books[0];
         books[0] = books[3];
         books[3] = temp;
-        for (int i = 0; i < books.length; i++) {
-            Book bk = books[i];
-            System.out.println("Книга: " + bk.getName()
-                    + "; Количество страниц: " + bk.getPages());
-        }
-        for (int i = 0; i < books.length; i++) {
-            Book bk = books[i];
-            if (bk.getName().equals(books[3].getName())) {
-                System.out.println("Книга: " + bk.getName()
-                        + "; Количество страниц: " + bk.getPages());
+        bk.printInfo(books);
+        System.out.println();
+        String unknown = "Clean Code";
+        for (Book book : books) {
+            if (book.getName().equals(unknown)) {
+                System.out.println("Книга: " + book.getName()
+                        + "; Количество страниц: " + book.getPages());
+                break;
             }
         }
     }
