@@ -64,4 +64,15 @@ public class Orders {
         }
         return Arrays.copyOf(rsl, count);
     }
+
+    public boolean delete(int id) {
+        int index = indexOf(id);
+        boolean replacement = index != -1;
+        if (replacement) {
+            System.arraycopy(items, index + 1, items, index, size - index - 1);
+            items[size - 1] = null;
+            size--;
+        }
+        return replacement;
+    }
 }
