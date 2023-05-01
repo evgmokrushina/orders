@@ -31,11 +31,12 @@ public class Orders {
 
     public boolean replace(int id, Item item) {
         int index = indexOf(id);
-        item.setId(id);
-        if (index != -1) {
+        boolean replacement = index != -1;
+        if (replacement) {
+            item.setId(id);
             items[index] = item;
         }
-        return false;
+        return replacement;
     }
 
     public Item[] findAll() {
