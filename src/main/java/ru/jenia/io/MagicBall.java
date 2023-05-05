@@ -16,6 +16,5 @@ public class MagicBall {
         } else {
             System.out.println("Может быть");
         }
-        System.out.println("Сгенерированное число: " + answer);
     }
 }
