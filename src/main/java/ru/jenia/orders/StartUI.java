@@ -18,6 +18,14 @@ public class StartUI {
                 System.out.println("Добавленная заявка: " + item);
             } else if (select == 6) {
                 run = false;
+            } else if (select == 1) {
+                System.out.println("=== Show all items ===");
+                Item[] items = orders.findAll();
+                for (Item item : items) {
+                    System.out.println(item);
+                }
+            } else {
+                System.out.println("Хранилище ещё не содержит заявок");
             }
         }
     }
