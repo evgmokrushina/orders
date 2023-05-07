@@ -45,7 +45,7 @@ public class StartUI {
                 if (orders.delete(id)) {
                     System.out.println("Заявка удалена успешно.");
                 } else {
-                    System.out.println("Ошибка удаления заявкию");
+                    System.out.println("Ошибка удаления заявки.");
                 }
             } else if (select == 4) {
                 System.out.println("=== Find item by id ===");
