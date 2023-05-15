@@ -1,45 +1,51 @@
 package ru.jenia.orders;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StartUITest {
-
+public class StartUITest {
     @Test
-    public void whenAddItem() {
-        String[] answers = {"Fix PC"};
-        Input input = new StubInput(answers);
+    public void whenCreateItem() {
+        Input in = new StubInput(
+                new String[] {"0", "Item name", "1"}
+        );
         Orders orders = new Orders();
-        StartUI.createItem(input, orders);
-        Item created = orders.findAll()[0];
-        Item expected = new Item("Fix PC");
-        assertThat(created.getName()).isEqualTo(expected.getName());
+        UserAction[] actions = {
+                new CreateAction(),
+                new ExitAction()
+        };
+        new StartUI().init(in, orders, actions);
+        assertThat(orders.findAll()[0].getName()).isEqualTo("Item name");
     }
 
     @Test
     public void whenEditItem() {
         Orders orders = new Orders();
-        Item item = new Item("new item");
-        orders.add(item);
-        String[] answers = {
-                String.valueOf(item.getId()), "edited item"
+        Item item = orders.add(new Item("Replaced item"));
+        String editedName = "New item name";
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(item.getId()), editedName, "1"}
+        );
+        UserAction[] actions = {
+                new EditAction(),
+                new ExitAction()
         };
-        StartUI.editItem(new StubInput(answers), orders);
-        Item edited = orders.findById(item.getId());
-        assertThat(edited.getName()).isEqualTo("edited item");
+        new StartUI().init(in, orders, actions);
+        assertThat(orders.findById(item.getId()).getName()).isEqualTo(editedName);
     }
 
     @Test
     public void whenDeleteItem() {
         Orders orders = new Orders();
-        Item item = new Item("Delete item");
-        orders.add(item);
-        String[] answers = {
-                String.valueOf(item.getId())
+        Item item = orders.add(new Item("Deleted item"));
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(item.getId()), "1"}
+        );
+        UserAction[] actions = {
+                new DeleteAction(),
+                new ExitAction()
         };
-        StartUI.deleteItem(new StubInput(answers), orders);
-        Item deleted = orders.findById(item.getId());
-        Assert.assertEquals(deleted, null);
+        new StartUI().init(in, orders, actions);
+        assertThat(orders.findById(item.getId())).isNull();
     }
 }
