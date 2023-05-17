@@ -29,7 +29,7 @@ public class StartUI {
         Input input = new ConsoleInput();
         Orders orders = new Orders();
         UserAction[] actions = {
-                new CreateAction(output), new EditAction(output), new ShowAllAction(output),
+                new CreateAction(output), new ShowAllAction(output), new EditAction(output),
                 new DeleteAction(output), new FindByIdAction(output), new FindByNameAction(output),
                 new ExitAction()
         };
