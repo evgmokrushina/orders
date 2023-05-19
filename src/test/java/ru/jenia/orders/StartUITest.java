@@ -7,22 +7,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StartUITest {
     @Test
     public void whenCreateItem() {
-        Output output = new StubOutput();
+        Output out = new ConsoleOutput();
         Input in = new StubInput(
                 new String[] {"0", "Item name", "1"}
         );
         Orders orders = new Orders();
         UserAction[] actions = {
-                new CreateAction(output),
+                new CreateAction(out),
                 new ExitAction()
         };
-        new StartUI(output).init(in, orders, actions);
+        new StartUI(out).init(in, orders, actions);
         assertThat(orders.findAll()[0].getName()).isEqualTo("Item name");
     }
 
     @Test
     public void whenEditItem() {
-        Output output = new StubOutput();
+        Output output = new ConsoleOutput();
         Orders orders = new Orders();
         Item item = orders.add(new Item("Replaced item"));
         String editedName = "New item name";
@@ -39,7 +39,7 @@ public class StartUITest {
 
     @Test
     public void whenDeleteItem() {
-        Output output = new StubOutput();
+        Output output = new ConsoleOutput();
         Orders orders = new Orders();
         Item item = orders.add(new Item("Deleted item"));
         Input in = new StubInput(
@@ -169,6 +169,83 @@ public class StartUITest {
                         + "1. Exit Program" + ln
                         + "=== Find item by id ===" + ln
                         + one + ln
+                        + "Menu:" + ln
+                        + "0. Find item by id" + ln
+                        + "1. Exit Program" + ln
+        );
+    }
+
+    @Test
+    public void whenShowAllIsNull() {
+        Output out = new StubOutput();
+        Orders orders = new Orders();
+        Input in = new StubInput(
+                new String[] {"0", "1"}
+        );
+        UserAction[] actions = {
+                new ShowAllAction(out),
+                new ExitAction()
+        };
+        new StartUI(out).init(in, orders, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString()).isEqualTo(
+                "Menu:" + ln
+                        + "0. Show all items" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Show all items ===" + ln
+                        + "Хранилище ещё не содержит заявок" + ln
+                        + "Menu:" + ln
+                        + "0. Show all items" + ln
+                        + "1. Exit Program" + ln
+        );
+    }
+
+    @Test
+    public void whenFindByNameNotFound() {
+        Output out = new StubOutput();
+        Orders orders = new Orders();
+        Item one = orders.add(new Item("test1"));
+        Input in = new StubInput(
+                new String[] {"0", "test2", "1"}
+        );
+        UserAction[] actions = {
+                new FindByNameAction(out),
+                new ExitAction()
+        };
+        new StartUI(out).init(in, orders, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString()).isEqualTo(
+                "Menu:" + ln
+                        + "0. Find item by name" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Find items by name ===" + ln
+                        + "Заявки с именем: test2 не найдены." + ln
+                        + "Menu:" + ln
+                        + "0. Find item by name" + ln
+                        + "1. Exit Program" + ln
+        );
+    }
+
+    @Test
+    public void whenFindByIdNotFound() {
+        Output out = new StubOutput();
+        Orders orders = new Orders();
+        Item one = orders.add(new Item("test1"));
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(2), "1"}
+        );
+        UserAction[] actions = {
+                new FindByIdAction(out),
+                new ExitAction()
+        };
+        new StartUI(out).init(in, orders, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString()).isEqualTo(
+                "Menu:" + ln
+                        + "0. Find item by id" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Find item by id ===" + ln
+                        + "Заявка с введенным id: 2 не найдена." + ln
                         + "Menu:" + ln
                         + "0. Find item by id" + ln
                         + "1. Exit Program" + ln
