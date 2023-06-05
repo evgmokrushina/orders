@@ -1,39 +1,39 @@
 package ru.jenia.orders;
 
 public class SingleOrders {
-    private static Orders oreders = null;
+    private static Orders orders = null;
 
     private SingleOrders() {
     }
 
-    public static Orders getOreders() {
-        if (oreders == null) {
-            oreders = new Orders();
+    public static Orders getOrders() {
+        if (orders == null) {
+            orders = new Orders();
         }
-        return oreders;
+        return orders;
     }
 
     public Item add(Item item) {
-        return oreders.add(item);
+        return orders.add(item);
     }
 
     public Item findById(int id) {
-        return null;
+        return orders.findById(id);
     }
 
     public boolean replace(int id, Item item) {
-        return oreders.replace(id, item);
+        return orders.replace(id, item);
     }
 
     public Item[] findAll() {
-        return oreders.findAll();
+        return orders.findAll();
     }
 
     public Item[] findByName(String key) {
-        return oreders.findByName(key);
+        return orders.findByName(key);
     }
 
     public boolean delete(int id) {
-        return oreders.delete(id);
+        return orders.delete(id);
     }
 }
