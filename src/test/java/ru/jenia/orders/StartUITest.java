@@ -3,6 +3,7 @@ package ru.jenia.orders;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import java.util.List;
 
 public class StartUITest {
     @Test
@@ -12,12 +13,12 @@ public class StartUITest {
                 new String[] {"0", "Item name", "1"}
         );
         Orders orders = new Orders();
-        UserAction[] actions = {
+        List<UserAction> actions = List.of(
                 new CreateAction(out),
                 new ExitAction()
-        };
+        );
         new StartUI(out).init(in, orders, actions);
-        assertThat(orders.findAll()[0].getName()).isEqualTo("Item name");
+        assertThat(orders.findAll().get(0).getName()).isEqualTo("Item name");
     }
 
     @Test
@@ -29,10 +30,10 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", String.valueOf(item.getId()), editedName, "1"}
         );
-        UserAction[] actions = {
+        List<UserAction> actions = List.of(
                 new EditAction(output),
                 new ExitAction()
-        };
+        );
         new StartUI(output).init(in, orders, actions);
         assertThat(orders.findById(item.getId()).getName()).isEqualTo(editedName);
     }
@@ -45,10 +46,10 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", String.valueOf(item.getId()), "1"}
         );
-        UserAction[] actions = {
+        List<UserAction> actions = List.of(
                 new DeleteAction(output),
                 new ExitAction()
-        };
+        );
         new StartUI(output).init(in, orders, actions);
         assertThat(orders.findById(item.getId())).isNull();
     }
@@ -60,9 +61,9 @@ public class StartUITest {
                 new String[] {"0"}
         );
         Orders orders = new Orders();
-        UserAction[] actions = {
+        List<UserAction> actions = List.of(
                 new ExitAction()
-        };
+        );
         new StartUI(out).init(in, orders, actions);
         assertThat(out.toString()).isEqualTo(
                 "Menu:" + System.lineSeparator()
@@ -79,10 +80,10 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", String.valueOf(one.getId()), replaceName, "1"}
         );
-        UserAction[] actions = new UserAction[]{
+        List<UserAction> actions = List.of(
                 new EditAction(out),
                 new ExitAction()
-        };
+        );
         new StartUI(out).init(in, orders, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString()).isEqualTo(
@@ -105,10 +106,10 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", "1"}
         );
-        UserAction[] actions = {
+        List<UserAction> actions = List.of(
                 new ShowAllAction(out),
                 new ExitAction()
-        };
+        );
         new StartUI(out).init(in, orders, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString()).isEqualTo(
@@ -131,10 +132,10 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", one.getName(), "1"}
         );
-        UserAction[] actions = {
+        List<UserAction> actions = List.of(
                 new FindByNameAction(out),
                 new ExitAction()
-        };
+        );
         new StartUI(out).init(in, orders, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString()).isEqualTo(
@@ -157,10 +158,10 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", String.valueOf(one.getId()), "1"}
         );
-        UserAction[] actions = {
+        List<UserAction> actions = List.of(
                 new FindByIdAction(out),
                 new ExitAction()
-        };
+        );
         new StartUI(out).init(in, orders, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString()).isEqualTo(
@@ -182,10 +183,10 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", "1"}
         );
-        UserAction[] actions = {
+        List<UserAction> actions = List.of(
                 new ShowAllAction(out),
                 new ExitAction()
-        };
+        );
         new StartUI(out).init(in, orders, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString()).isEqualTo(
@@ -208,10 +209,10 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", "test2", "1"}
         );
-        UserAction[] actions = {
+        List<UserAction> actions = List.of(
                 new FindByNameAction(out),
                 new ExitAction()
-        };
+        );
         new StartUI(out).init(in, orders, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString()).isEqualTo(
@@ -234,10 +235,10 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", String.valueOf(2), "1"}
         );
-        UserAction[] actions = {
+        List<UserAction> actions = List.of(
                 new FindByIdAction(out),
                 new ExitAction()
-        };
+        );
         new StartUI(out).init(in, orders, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString()).isEqualTo(
@@ -259,9 +260,9 @@ public class StartUITest {
                 new String[] {"1", "0"}
         );
         Orders orders = new Orders();
-        UserAction[] actions = new UserAction[]{
+        List<UserAction> actions = List.of(
                 new ExitAction()
-        };
+        );
         new StartUI(out).init(in, orders, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString()).isEqualTo(

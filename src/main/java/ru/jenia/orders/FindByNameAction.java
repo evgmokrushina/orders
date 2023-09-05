@@ -1,5 +1,8 @@
 package ru.jenia.orders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FindByNameAction implements UserAction {
     private final Output out;
 
@@ -16,8 +19,8 @@ public class FindByNameAction implements UserAction {
     public boolean execute(Input input, Orders orders) {
         out.println("=== Find items by name ===");
         String name = input.askStr("Enter name: ");
-        Item[] items = orders.findByName(name);
-        if (items.length > 0) {
+        List<Item> items = orders.findByName(name);
+        if (items.size() > 0) {
             for (Item item : items) {
                 out.println(item);
             }

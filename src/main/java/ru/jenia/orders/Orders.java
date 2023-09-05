@@ -1,16 +1,17 @@
 package ru.jenia.orders;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Orders {
-    private final Item[] items = new Item[100];
+    private List<Item> items = new ArrayList<>();
     private int ids = 1;
-    private int size = 0;
 
     private int indexOf(int id) {
         int rsl = -1;
-        for (int index = 0; index < size; index++) {
-            if (items[index].getId() == id) {
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index).getId() == id) {
                 rsl = index;
                 break;
             }
@@ -20,13 +21,13 @@ public class Orders {
 
     public Item add(Item item) {
         item.setId(ids++);
-        items[size++] = item;
+        items.add(item);
         return item;
     }
 
     public Item findById(int id) {
         int index = indexOf(id);
-        return index != -1 ? items[index] : null;
+        return index != -1 ? items.get(index) : null;
     }
 
     public boolean replace(int id, Item item) {
@@ -34,44 +35,30 @@ public class Orders {
         boolean replacement = index != -1;
         if (replacement) {
             item.setId(id);
-            items[index] = item;
+            items.set(index, item);
         }
         return replacement;
     }
 
-    public Item[] findAll() {
-        Item[] rsl = new Item[size];
-        int count = 0;
-        for (int index = 0; index < size; index++) {
-            Item item = items[index];
-            if (item != null) {
-                rsl[count] = item;
-                count++;
-            }
-        }
-        return Arrays.copyOf(rsl, count);
+    public List<Item> findAll() {
+       return List.copyOf(items);
     }
 
-    public Item[] findByName(String key) {
-        Item[] rsl = new Item[size];
-        int count = 0;
-        for (int index = 0; index < size; index++) {
-            Item item = this.items[index];
+    public List<Item> findByName(String key) {
+        List<Item> rsl = new ArrayList<>();
+        for (Item item : items) {
             if (item.getName().equals(key)) {
-                rsl[count] = item;
-                count++;
+                rsl.add(item);
             }
         }
-        return Arrays.copyOf(rsl, count);
+        return rsl;
     }
 
     public boolean delete(int id) {
         int index = indexOf(id);
         boolean replacement = index != -1;
         if (replacement) {
-            System.arraycopy(items, index + 1, items, index, size - index - 1);
-            items[size - 1] = null;
-            size--;
+            items.remove(index);
         }
         return replacement;
     }

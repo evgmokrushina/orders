@@ -1,5 +1,7 @@
 package ru.jenia.orders;
 
+import java.util.List;
+
 public class SingleOrders {
     private static Orders orders = null;
 
@@ -25,11 +27,11 @@ public class SingleOrders {
         return orders.replace(id, item);
     }
 
-    public Item[] findAll() {
+    public List<Item> findAll() {
         return orders.findAll();
     }
 
-    public Item[] findByName(String key) {
+    public List<Item> findByName(String key) {
         return orders.findByName(key);
     }
 
